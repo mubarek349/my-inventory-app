@@ -5,7 +5,7 @@ import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-export default function TransferInventoryForm(){
+export default function AddInventoryForm(){
 
      const selectOptions=[
         {
@@ -38,7 +38,7 @@ export default function TransferInventoryForm(){
         setLoading(true);
         const baseUrl="http://localhost:3000"
         try {
-            const response=await fetch(`${baseUrl}/api/adjustments/transfer`,
+            const response=await fetch(`${baseUrl}/api/adjustments/add`,
                 {
                 method:"POST",
                 headers:{
@@ -67,17 +67,12 @@ export default function TransferInventoryForm(){
                 shadow sm:p-6 md:p-8 dark:bg-gray-800 
                 dark:border-gray-700 my-3">
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                   <TextInput label="Enter Quantity of stock to transfer"
-                        name="transferStockQty"
+                   <TextInput label="Enter Quantity of stock to Add"
+                        name="addStockQty"
                         type="number"
                         register={register}
                         errors={errors}
-                   />
-                   <SelectInput label="Select the Warehouse that will give the stock"
-                        name="givingWarehouseId"
-                        register={register}
                         className="w-full"
-                        options={selectOptions}
                    />
                    <SelectInput label="Select the Warehouse that will receive the stock"
                         name="receivingWarehouseId"
