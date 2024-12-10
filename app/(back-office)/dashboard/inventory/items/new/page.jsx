@@ -7,48 +7,50 @@ import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
 import React,  {useState } from "react";
 import { useForm } from "react-hook-form";
+import { FALSE } from "sass";
 export default function NewItem(){
 
     const [imageUrl,setImageUrl] = useState("");
+
     const categories=[
         {
             label : "Electronics",
-            value : "kkkkkkkkkkkkkk"
+            value : "ds"
         },
         {
             label : "Clothes",
-            value : "dsssssssssssssss"
+            value : "dss"
         }
         ];
     const suppliers=[
         {
             label : "Supplier 1",
-            value : "kkkkkkkkkkkkkk"
+            value : "su"
         },
         {
             label : "Supplier 2",
-            value : "dsssssssssssssss"
+            value : "suu"
         }
         ];
     const units=[
         {
             label : "Kg",
-            value : "kkkkkkkkkkkkkk"
+            value : "kg"
         },
         {
             label : "Pcs",
-            value : "dsssssssssssssss"
+            value : "kgg"
         }
         
         ];
         const brands=[
             {
                 label : "Hp",
-                value : "kkkkkkkkkkkkkk"
+                value : "hp"
             },
             {
                 label : "Dell",
-                value : "dsssssssssssssss"
+                value : "hpp"
             }
         ];
         const warehouses=[
@@ -86,6 +88,7 @@ export default function NewItem(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("New Item Created Successfully!");
                     reset();
                 }
         } catch (error) {
@@ -113,7 +116,7 @@ export default function NewItem(){
                        className="w-full"
                        />
                        <SelectInput label="Select the Item Category"
-                       name="catagoryId"
+                       name="categoryId"
                        register={register}
                        className="w-full"
                        options={categories}
@@ -128,14 +131,17 @@ export default function NewItem(){
                        name="barcode"
                        register={register}
                        errors={errors}
-                       //isRequired='false'
+                       isRequired = {false}
                        className="w-full"
                        />
                        <TextInput label="Item Quantity"
-                       name="qty"
+                       name="quantity"
                        register={register}
+                       min={1}
+                       mesg="and can not be less than 1"
                        errors={errors}
                        className="w-full"
+                       type="number"
                        /> 
                         <SelectInput label="Select the Item Unit"
                        name="unitId"
@@ -159,6 +165,8 @@ export default function NewItem(){
                        name="buyingPrice"
                        type="number"
                        register={register}
+                       min={0}
+                       mesg="and can not be less than 0"
                        errors={errors}
                        className="w-full"
                        />
@@ -166,6 +174,8 @@ export default function NewItem(){
                        name="sellingPrice"
                        type="number"
                        register={register}
+                       min={0}
+                       mesg="and can not be less than 0"
                        errors={errors}
                        className="w-full"
                        />
@@ -173,6 +183,8 @@ export default function NewItem(){
                        name="reOrderPoint"
                        type="number"
                        register={register}
+                       min={1}
+                       mesg="and can not be less than 1"
                        errors={errors}
                        className="w-full"
                        />
@@ -187,29 +199,35 @@ export default function NewItem(){
                        type="number"
                        register={register}
                        errors={errors}
+                       isRequired = {false}
                        className="w-full"
                        /> 
                        <TextInput label="Item Dimensions in cm (20 x 30 x 100)"
                        name="dimensions"
                        register={register}
                        errors={errors}
+                       isRequired = {false}
                        className="w-full"
                        />
                        <TextInput label="Item Tax Rate in %"
                        name="taxRate"
                        type="number"
                        register={register}
+                       min={0}
+                       mesg="and must be a number between 0 and 100."
                        errors={errors}
                        className="w-full"
                        />
                        <TextAreaInput label="Item Description"
                        name="description"
                        register={register}
+                       isRequired = {false}
                        errors={errors}
                        />
                        <TextAreaInput label="Item Notes"
                        name="notes"
                        register={register}
+                       isRequired = {false}
                        errors={errors}
                        /> 
                        <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"/>

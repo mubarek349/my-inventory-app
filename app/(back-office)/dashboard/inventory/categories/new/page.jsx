@@ -5,6 +5,7 @@ import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
 import {React, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function NewCategories(){
     const { 
         register, 
@@ -13,6 +14,7 @@ export default function NewCategories(){
         formState: { errors } 
         } = useForm();
     const [loading,setLoading]=useState(false);
+    
     async function onSubmit(data){
         console.log(data)
         setLoading(true);
@@ -29,6 +31,7 @@ export default function NewCategories(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success('New Category Created Successfully!');
                     reset();
                 }
         } catch (error) {
@@ -48,14 +51,15 @@ export default function NewCategories(){
                     shadow sm:p-6 md:p-8 dark:bg-gray-800 
                     dark:border-gray-700 my-3">
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                       <TextInput label="Catagory Title"
+                       <TextInput label="category Title"
                        name="title"
                        register={register}
                        errors={errors}
                        />
-                       <TextAreaInput label="Catagory Description"
+                       <TextAreaInput label="category Description"
                        name="description"
                        register={register}
+                       isRequired = {false}
                        errors={errors}
                        />
                     </div>

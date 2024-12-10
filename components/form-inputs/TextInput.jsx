@@ -1,5 +1,5 @@
 import React from "react";
-export default function TextInput({label,name,isRequired=true,register,errors,type="text",className="sm:col-span-2"}){
+export default function TextInput({label,name,isRequired=true,min=0,register,errors,type="text",className="sm:col-span-2",defaultValue="",mesg=""}){
     return(
         <div className={className}>
             <label htmlFor={name} className="block text-sm 
@@ -8,10 +8,12 @@ export default function TextInput({label,name,isRequired=true,register,errors,ty
             </label>
             <div className="mt-2">
                 <input 
-                {...register(`${name}`,{required:isRequired})}
-                type={type}
+                
+                {...register(`${name}`,{required:isRequired,min:min})}
+                type={type} 
                 name={name}
                 id={name}
+                defaultValue={defaultValue}
                 autoComplete={name}
                 className="block w-full rounded-md border-0 py-2 text-gray-900
                 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
@@ -20,7 +22,7 @@ export default function TextInput({label,name,isRequired=true,register,errors,ty
                 /> 
                 {errors[`${name}`] && (
                     <span className="text-sm text-red-600">
-                    {label} is required
+                    {label} field is required {mesg}
                     </span>
                 )}  
             </div>

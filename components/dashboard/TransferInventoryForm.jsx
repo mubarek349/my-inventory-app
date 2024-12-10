@@ -49,6 +49,7 @@ export default function TransferInventoryForm(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("The Stock Transfered Successfully!");
                     reset();
                 }
         } catch (error) {
@@ -67,10 +68,18 @@ export default function TransferInventoryForm(){
                 shadow sm:p-6 md:p-8 dark:bg-gray-800 
                 dark:border-gray-700 my-3">
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <TextInput label="Reference Number"
+                        name="referenceNumber"
+                        type="number"
+                        register={register}
+                        errors={errors}
+                   />
                    <TextInput label="Enter Quantity of stock to transfer"
                         name="transferStockQty"
                         type="number"
                         register={register}
+                        min={1}
+                        mesg="and can not be less than 1"
                         errors={errors}
                    />
                    <SelectInput label="Select the Warehouse that will give the stock"
@@ -80,7 +89,7 @@ export default function TransferInventoryForm(){
                         options={selectOptions}
                    />
                    <SelectInput label="Select the Warehouse that will receive the stock"
-                        name="receivingWarehouseId"
+                        name="warehouseId"
                         register={register}
                         className="w-full"
                         options={selectOptions}
@@ -88,6 +97,7 @@ export default function TransferInventoryForm(){
                    <TextAreaInput label="Adjustment Notes"
                         name="notes"
                         register={register}
+                        isRequired = {false}
                         errors={errors}
                    />                     
                 </div>

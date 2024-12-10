@@ -5,6 +5,7 @@ import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function AddInventoryForm(){
 
      const selectOptions=[
@@ -49,6 +50,7 @@ export default function AddInventoryForm(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("The Stock added Successfully!");
                     reset();
                 }
         } catch (error) {
@@ -67,15 +69,23 @@ export default function AddInventoryForm(){
                 shadow sm:p-6 md:p-8 dark:bg-gray-800 
                 dark:border-gray-700 my-3">
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <TextInput label="Reference Number"
+                        name="referenceNumber"
+                        type="number"
+                        register={register}
+                        errors={errors}
+                   />
                    <TextInput label="Enter Quantity of stock to Add"
                         name="addStockQty"
                         type="number"
                         register={register}
+                        min={1}
+                        mesg="and can not be less than 1"
                         errors={errors}
                         className="w-full"
                    />
                    <SelectInput label="Select the Warehouse that will receive the stock"
-                        name="receivingWarehouseId"
+                        name="warehouseId"
                         register={register}
                         className="w-full"
                         options={selectOptions}
@@ -83,6 +93,7 @@ export default function AddInventoryForm(){
                    <TextAreaInput label="Adjustment Notes"
                         name="notes"
                         register={register}
+                        isRequired = {false}
                         errors={errors}
                    />                     
                 </div>

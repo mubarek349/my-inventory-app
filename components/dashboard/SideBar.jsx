@@ -74,19 +74,19 @@ export default function SideBar() {
     ];
 
   return (
-           <div className="w-60 min-h-screen bg-slate-800
-            text-slate-50 fixed">
+           <div className="w-60 bg-slate-800
+            text-slate-50 sidebar h-screen overflow-y-auto fixed ">
                 {/*top part */}
                <div className="flex flex-col">
                     {/*(logo part) */}
                    <Link href="/dashboard/home/overview" className="flex bg-slate-950 space-x-2
-                   items-center py-4 px-2">
+                   items-center py-4 px-2 fixed top-0 left-0 right-900 z-10 w-60">
                        <BaggageClaim /> 
                        <span className="font-semibold">Inventory</span>
                    </Link>
                     {/*links */}
                      <nav className="flex flex-col 
-                     gap-4 p-3">
+                     gap-4 p-3 mt-14">
                         <Link className="flex items-center 
                         space-x-2 bg-blue-600 text-slate-50
                         p-2 rounded-md" href="/dashboard/home">

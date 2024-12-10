@@ -4,6 +4,7 @@ import SubmitButton from "@/components/form-inputs/SubmitButton";
 import TextInput from "@/components/form-inputs/TextInput";
 import {React, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function NewBrand(){
     const { 
         register, 
@@ -28,6 +29,7 @@ export default function NewBrand(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("New Brand Created Successfully :)");
                     reset();
                 }
         } catch (error) {

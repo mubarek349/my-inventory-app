@@ -1,3 +1,4 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 export default function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust '*' to specific origins if needed
@@ -14,27 +15,44 @@ export default function handler(req, res) {
 export async function POST(request) {
 
     try {
-            // title,
-            // catagoryId,
-            // sku,
-            // barcode,
-            // qty,
-            // unitId,
-            // brandId,
-            // supplierId,
-            // buyingPrice,
-            // sellingPrice,
-            // reOrderPoint,
-            // warehouseId,
-            // imageUrl,
-            // weight,
-            // dimensions,
-            // taxRate,
-            // description,
-            // notes
-        const data= await request.json();
-        console.log(data);
-        return NextResponse.json(data);
+            const {title,
+            categoryId,
+            sku,
+            barcode,
+            quantity,
+            unitId,
+            brandId,
+            supplierId,
+            buyingPrice,
+            sellingPrice,
+            reOrderPoint,
+            warehouseId,
+            imageUrl,
+            weight,
+            dimensions,
+            taxRate,
+            description,
+            notes}=await request.json();
+        const item=await db.item.create({data:{title,
+            categoryId,
+            sku,
+            barcode,
+            quantity : parseInt(quantity),
+            unitId,
+            brandId,
+            supplierId,
+            buyingPrice : parseFloat(buyingPrice),
+            sellingPrice : parseFloat(sellingPrice),
+            reOrderPoint : parseInt(reOrderPoint),
+            warehouseId,
+            imageUrl,
+            weight : parseFloat(weight),
+            dimensions,
+            taxRate : parseFloat(buyingPrice),
+            description,
+            notes},},);
+        console.log(item);
+        return NextResponse.json(item);
     } catch (error) {
         console.log(error);
         return NextResponse.json(

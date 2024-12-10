@@ -4,6 +4,7 @@ import SubmitButton from "@/components/form-inputs/SubmitButton";
 import TextInput from "@/components/form-inputs/TextInput";
 import {React, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function NewUnit(){
     const { 
         register, 
@@ -28,6 +29,7 @@ export default function NewUnit(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("New Unit Created Successfully!");
                     reset();
                 }
         } catch (error) {
@@ -53,8 +55,8 @@ export default function NewUnit(){
                        errors={errors}
                        className="w-full"
                        />
-                       <TextInput label="Unit Abbrevation"
-                       name="abbrevation"
+                       <TextInput label="Unit Abbreviation"
+                       name="abbreviation"
                        register={register}
                        errors={errors}
                        className="w-full"

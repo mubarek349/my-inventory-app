@@ -6,6 +6,7 @@ import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
 import {React, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function NewWarehouse(){
     const selectOptions=[
         {
@@ -41,6 +42,7 @@ export default function NewWarehouse(){
                 if(response.ok){
                     console.log(response);
                     setLoading(false);
+                    toast.success("New Warehouse Created Successfully!")
                     reset();
                 }
         } catch (error) {
@@ -75,11 +77,13 @@ export default function NewWarehouse(){
                        <TextInput label="Warehouse Location"
                        name="location"
                        register={register}
+                       isRequired = {false}
                        errors={errors}
                        />
                        <TextAreaInput label="Warehouse Description"
                        name="description"
                        register={register}
+                       isRequired = {false}
                        errors={errors}
                        />                     
                     </div>
