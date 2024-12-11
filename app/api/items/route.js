@@ -1,4 +1,5 @@
 import db from "@/lib/db";
+import { ObjectId } from "bson";
 import { NextResponse } from "next/server";
 export default function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust '*' to specific origins if needed
@@ -13,44 +14,35 @@ export default function handler(req, res) {
     res.status(200).json({ message: 'CORS enabled!' });
 }
 export async function POST(request) {
-
+    const data=await request.json();
+    if (!ObjectId.isValid(data.categoryId)) {
+        return new NextResponse(
+          JSON.stringify({ error: "Invalid categoryId provided." }),
+          { status: 400 }
+        );
+      }
     try {
-            const {title,
-            categoryId,
+        
+        const item=await db.item.create({data:{
+            title: data.title,
+            categoryId : data.categoryId,
             sku,
             barcode,
-            quantity,
+            quantity : parseInt(data.quantity),
             unitId,
             brandId,
             supplierId,
-            buyingPrice,
-            sellingPrice,
-            reOrderPoint,
+            buyingPrice : parseFloat(data.buyingPrice),
+            sellingPrice : parseFloat(data.sellingPrice),
+            reOrderPoint : parseInt(data.reOrderPoint),
             warehouseId,
             imageUrl,
-            weight,
+            weight : parseFloat(data.weight),
             dimensions,
-            taxRate,
-            description,
-            notes}=await request.json();
-        const item=await db.item.create({data:{title,
-            categoryId,
-            sku,
-            barcode,
-            quantity : parseInt(quantity),
-            unitId,
-            brandId,
-            supplierId,
-            buyingPrice : parseFloat(buyingPrice),
-            sellingPrice : parseFloat(sellingPrice),
-            reOrderPoint : parseInt(reOrderPoint),
-            warehouseId,
-            imageUrl,
-            weight : parseFloat(weight),
-            dimensions,
-            taxRate : parseFloat(buyingPrice),
+            taxRate : parseFloat(data.taxRate),
             description,
             notes},},);
+            
         console.log(item);
         return NextResponse.json(item);
     } catch (error) {
@@ -63,6 +55,7 @@ export async function POST(request) {
             {
                 status:500
             });
+    }finally{
+           await db.$disconnect(); 
     }
-    
 }

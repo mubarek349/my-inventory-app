@@ -11,7 +11,8 @@
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-collapsible": "^1.1.1",
-    "@uploadthing/react": "^7.1.1",
+    "@uploadthing/react": "^7.1.2",
+    "bson": "^6.10.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
@@ -23,7 +24,7 @@
     "sass": "^1.80.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^7.3.0"
+    "uploadthing": "^7.4.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
