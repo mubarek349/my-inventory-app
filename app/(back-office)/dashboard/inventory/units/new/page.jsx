@@ -16,7 +16,7 @@ export default function NewUnit(){
     async function onSubmit(data){
         console.log(data)
         setLoading(true);
-        const baseUrl="https://my-inventory-app-ten.vercel.app"
+        const baseUrl="https://my-inventory-app-git-main-mubarek-ahmeds-projects.vercel.app"
         try {
             const response=await fetch(`${baseUrl}/api/units`,
                 {
