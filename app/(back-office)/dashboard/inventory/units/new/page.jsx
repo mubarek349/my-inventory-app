@@ -16,7 +16,7 @@ export default function NewUnit(){
     async function onSubmit(data){
         console.log(data)
         setLoading(true);
-        const baseUrl="http://localhost:3000"
+        const baseUrl="https://my-inventory-app-ten.vercel.app"
         try {
             const response=await fetch(`${baseUrl}/api/units`,
                 {
