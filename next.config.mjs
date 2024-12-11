@@ -15,8 +15,8 @@ const nextConfig = {
    async rewrites() {
         return [
             {
-                source: '/api/:path*',
-                destination: 'http://localhost:3000/api/:path*', // Proxy to Backend
+                source: '/api/:https://my-inventory-app-ten.vercel.app',
+                destination: 'http://localhost:3000/api/:https://my-inventory-app-ten.vercel.app', // Proxy to Backend
             },
         ];
   },
