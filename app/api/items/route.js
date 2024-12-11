@@ -14,37 +14,37 @@ export default function handler(req, res) {
     res.status(200).json({ message: 'CORS enabled!' });
 }
 export async function POST(request) {
-    const data=await request.json();
-    if (!ObjectId.isValid(data.categoryId)) {
-        return new NextResponse(
-          JSON.stringify({ error: "Invalid categoryId provided." }),
-          { status: 400 }
-        );
-      }
+    
     try {
-        
-        const item=await db.item.create({data:{
-            title: data.title,
-            categoryId : data.categoryId,
-            sku,
-            barcode,
-            quantity : parseInt(data.quantity),
-            unitId,
-            brandId,
-            supplierId,
-            buyingPrice : parseFloat(data.buyingPrice),
-            sellingPrice : parseFloat(data.sellingPrice),
-            reOrderPoint : parseInt(data.reOrderPoint),
-            warehouseId,
-            imageUrl,
-            weight : parseFloat(data.weight),
-            dimensions,
-            taxRate : parseFloat(data.taxRate),
-            description,
-            notes},},);
+        const data=await request.json();
+        // if (!ObjectId.isValid(data.categoryId)) {
+        //     return new NextResponse(
+        //     JSON.stringify({ error: "Invalid categoryId provided." }),
+        //     { status: 400 }
+        //     );
+        // }
+        // const item=await db.item.create({data:{
+        //     title: data.title,
+        //     categoryId : data.categoryId,
+        //     sku,
+        //     barcode,
+        //     quantity : parseInt(data.quantity),
+        //     unitId,
+        //     brandId,
+        //     supplierId,
+        //     buyingPrice : parseFloat(data.buyingPrice),
+        //     sellingPrice : parseFloat(data.sellingPrice),
+        //     reOrderPoint : parseInt(data.reOrderPoint),
+        //     warehouseId,
+        //     imageUrl,
+        //     weight : parseFloat(data.weight),
+        //     dimensions,
+        //     taxRate : parseFloat(data.taxRate),
+        //     description,
+        //     notes},},);
             
-        console.log(item);
-        return NextResponse.json(item);
+        console.log(data);
+        return NextResponse.json(data);
     } catch (error) {
         console.log(error);
         return NextResponse.json(
