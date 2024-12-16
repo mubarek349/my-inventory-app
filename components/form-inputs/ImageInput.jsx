@@ -21,27 +21,27 @@ export default function ImageInput({label,imageUrl="",setImageUrl,endpoint="imag
                  </button>
              )}
         </div> 
-        {imageUrl ? (
-           <Image 
-             src={imageUrl}
-             alt="item image"
-             width={1000}
-             height={667}
-             className="w-full h-64 object-cover"
-           />
-        ):(
-         <UploadDropzone
-             endpoint={endpoint}
-             onClientUploadComplete={(res) => {
-             // Do something with the response
-             setImageUrl(res[0].appUrl)
-             console.log("Files: ",res[0].appUrl);
-             console.log("Upload Completed");
-             }}
-             onUploadError={(error) => {
-             // Do something with the error.
-             console.log(`ERROR! ${error.message}`);
-             }}
+        {imageUrl ? 
+              (<Image 
+                src={imageUrl}
+                alt="item image"
+                width={1000}
+                height={667}
+                className="w-full h-64 object-cover"
+              />) : 
+            (
+              <UploadDropzone
+                endpoint={endpoint}
+                onClientUploadComplete={(res) => {
+                // Do something with the response
+                setImageUrl(res[0].appUrl)
+                console.log("Files: ",res[0].appUrl);
+                console.log("Upload Completed");
+                }}
+                onUploadError={(error) => {
+                // Do something with the error.
+                console.log(`ERROR! ${error.message}`);
+                }}
          />
         )}
     </div>

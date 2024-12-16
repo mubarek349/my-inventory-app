@@ -2,16 +2,16 @@ import db from "@/lib/db";
 import { NextResponse } from "next/server";
 export async function POST(request) {
     try {
-        const {title,abbreviation}=await request.json();
-        const unit=await db.unit.create({data:{title,abbreviation},},);
-        console.log(unit);
-        return NextResponse.json(unit);
+        const {name,phone,email,address,contactPerson,supplierCode,paymentTerms,taxId,notes}=await request.json();
+        const supplier=await db.supplier.create({data:{name,phone,email,address,contactPerson,supplierCode,paymentTerms,taxId,notes},},);
+        console.log(supplier);
+        return NextResponse.json(supplier);
     } catch (error) {
         console.log(error);
         return NextResponse.json(
             {
                 error,
-                message:"Failed to create a Unit"
+                message:"Failed to create a supplier"
             },
             {
                 status:500
@@ -22,18 +22,18 @@ export async function POST(request) {
 
 export async function GET(){
     try {
-        const units = await db.unit.findMany({
+        const suppliers = await db.supplier.findMany({
             orderBy:{
-                createdAt : 'desc' // latest unit
+                createdAt : 'desc' // latest supplier
             },
         });
-        return NextResponse.json(units);
+        return NextResponse.json(suppliers);
     } catch (error) {
         console.log(error);
         return NextResponse.json(
             {
                 error,
-                message:"Failed to fetch a Unit"
+                message:"Failed to fetch a supplier"
             },
             {
                 status:500

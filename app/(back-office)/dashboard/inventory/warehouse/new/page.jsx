@@ -4,18 +4,19 @@ import SelectInput from "@/components/form-inputs/SelectInput";
 import SubmitButton from "@/components/form-inputs/SubmitButton";
 import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
-import {React, useState } from "react";
+import { makePostRequest } from "@/lib/apiRequest";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+
 export default function NewWarehouse(){
     const selectOptions=[
         {
-            label : "Branch",
-            value : "Branch"
+            id : "Branch",
+            name : "Branch"
         },
         {
-            label : "Main",
-            value : "Main"
+            id : "Main",
+            name : "Main"
         }
         
     ]
@@ -26,36 +27,15 @@ export default function NewWarehouse(){
         formState: { errors } 
         } = useForm();
     const [loading,setLoading]=useState(false);
+
     async function onSubmit(data){
         console.log(data)
-        setLoading(true);
-        const baseUrl="https://my-inventory-app-git-main-mubarek-ahmeds-projects.vercel.app"
-        try {
-            const response=await fetch(`${baseUrl}/api/warehouse`,
-                {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify(data)
-                });
-                if(response.ok){
-                    console.log(response);
-                    setLoading(false);
-                    toast.success("New Warehouse Created Successfully!")
-                    reset();
-                }
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-            
-        }
-        
+        makePostRequest(setLoading,"api/warehouse",data,"Warehouse",reset);
     }
     return(
         <div>
             {/* Header */}
-            <FormHeader title="New Warehouse" href="/dashboard/inventory/"/>
+            <FormHeader title="New Warehouse" href="/dashboard/inventory/warehouse"/>
             {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl mx-auto p-4 bg-white
                     border border-gray-200 rounded-lg 

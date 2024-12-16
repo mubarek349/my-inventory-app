@@ -1,11 +1,26 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 export async function POST(request) {
     try {
-        // {addStockQty,warehouseId,notes,referenceNumber}
-        const data =await request.json();
-        // const adjustment=await db.addStockWarehouse.create({data});
-        console.log(data);
-        return NextResponse.json(data);
+       const {
+            referenceNumber,
+            itemId,
+            addStockQty,
+            warehouseId,
+            notes
+          } = await request.json();
+        const adjustment=await db.addStockWarehouse.
+        create({data:
+                {
+                    referenceNumber : referenceNumber,
+                    itemId : itemId,
+                    addStockQty : parseInt(addStockQty),
+                    recievingWarehouseId : warehouseId,
+                    notes : notes
+                }
+            });
+        console.log(adjustment);
+        return NextResponse.json(adjustment);
     } catch (error) {
         console.log(error);
         return NextResponse.json(
@@ -18,4 +33,25 @@ export async function POST(request) {
             });
     }
     
+}
+
+export async function GET(){
+    try {
+        const adjustment = await db.AddStockWarehouse.findMany({
+            orderBy:{
+                createdAt : 'desc' // latest adjustment
+            },
+        });
+        return NextResponse.json(adjustment);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to fetch an Adjustment"
+            },
+            {
+                status:500
+            });
+    }
 }

@@ -17,8 +17,8 @@ export default function SelectInput({label,name,register,className="sm:col-span-
                 >
                     {options.map((option,i)=>{
                         return(
-                            <option key={i} value={option.value} >
-                                {option.label}
+                            <option key={i} value={option.id} >
+                                {option.title}{option.name}
                             </option>
                     )})} 
                 </select>  

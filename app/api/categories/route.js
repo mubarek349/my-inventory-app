@@ -19,3 +19,26 @@ export async function POST(request) {
     }
     
 }
+
+
+export async function GET() {
+
+    try {
+        const categories = await db.category.findMany({
+            orderBy:{
+                createdAt : 'desc' // latest category
+            },
+        });
+        return NextResponse.json(categories);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to fetch a category"
+            },
+            {
+                status:500
+            });
+    }
+}

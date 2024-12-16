@@ -3,30 +3,10 @@ import SelectInput from "@/components/form-inputs/SelectInput";
 import SubmitButton from "@/components/form-inputs/SubmitButton";
 import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
+import { makePostRequest } from "@/lib/apiRequest";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-export default function TransferInventoryForm(){
-
-     const selectOptions=[
-        {
-            label : "Branch A",
-            value : "Branchdfj"
-        },
-        {
-            label : "Branch B",
-            value : "adlfkjredsklf"
-        },
-        {
-            label : "Main A",
-            value : "mmnbajhaiue"
-        },
-        {
-            label : "Main B",
-            value : "ddfadjfka"
-        }
-        
-    ]
+export default function TransferInventoryForm({items,warehouses}){
     const { 
         register, 
         handleSubmit, 
@@ -34,31 +14,10 @@ export default function TransferInventoryForm(){
         formState: { errors }, 
         } = useForm();
     const [loading,setLoading]=useState(false);
+
     async function onSubmit(data){
         console.log(data)
-        setLoading(true);
-        const baseUrl="https://my-inventory-app-git-main-mubarek-ahmeds-projects.vercel.app"
-        try {
-            const response=await fetch(`${baseUrl}/api/adjustments/transfer`,
-                {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify(data)
-                });
-                if(response.ok){
-                    console.log(response);
-                    setLoading(false);
-                    toast.success("The Stock Transfered Successfully!");
-                    reset();
-                }
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-            
-        }
-        
+        makePostRequest(setLoading,"api/adjustments/transfer",data,"Stock Adjustment",reset);
     }
     return(
         <div>
@@ -80,20 +39,27 @@ export default function TransferInventoryForm(){
                         type="number"
                         register={register}
                         min={1}
+                        className="w-full"
                         mesg="and can not be less than 1"
                         errors={errors}
+                   />
+                   <SelectInput label="Select the Item"
+                        name="itemId"
+                        register={register}
+                        className="w-full"
+                        options={items}
                    />
                    <SelectInput label="Select the Warehouse that will give the stock"
                         name="givingWarehouseId"
                         register={register}
                         className="w-full"
-                        options={selectOptions}
+                        options={warehouses}
                    />
                    <SelectInput label="Select the Warehouse that will receive the stock"
                         name="warehouseId"
                         register={register}
                         className="w-full"
-                        options={selectOptions}
+                        options={warehouses}
                    />
                    <TextAreaInput label="Adjustment Notes"
                         name="notes"
@@ -102,7 +68,7 @@ export default function TransferInventoryForm(){
                         errors={errors}
                    />                     
                 </div>
-               <SubmitButton isloading={loading} title="Adjustment"/>
+               <SubmitButton isloading={loading} title="Adjustment" />
             </form>
     
         </div>

@@ -1,7 +1,7 @@
 "use client"
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import OptionCard from "@/components/dashboard/OptionCard";
-import { Diff, LayoutGrid, LayoutPanelTop, Scale, Slack, Warehouse } from "lucide-react";
+import { Diff, Factory, LayoutGrid, LayoutPanelTop, Scale, Slack, Warehouse } from "lucide-react";
 import React from "react";
 export default function Inventory(){
     const optionCards =[ 
@@ -46,6 +46,15 @@ export default function Inventory(){
             icon : Scale,
          },
          {
+            title : "Suppliers",
+            description : "Create standalone items and services that you buy and sell",
+            link : "/dashboard/inventory/suppliers/new",
+            linkTitle : "New Supplier",
+            enabled : true,
+            icon : Factory,
+         },
+
+         {
             title : "Inventory Adjustments",
             description : "Trnasfer Stock from the main warehouse   ",
             link : "/dashboard/inventory/adjustments/new",
@@ -53,20 +62,19 @@ export default function Inventory(){
             enabled : true,
             icon : Diff,
          },
-
+         
     ];
     return(
         <div>
-            <FixedHeader newLink="/dashboard/inventory/items/new"/>
+            <FixedHeader title="All Items" newLink="/dashboard/inventory/items/new"/>
             <div className="grid lg:grid-cols-3 md:grid-cols-2  py-8 px-16 gap-6">
                 {
                     optionCards.map((items,i)=>{
                         return(
                           <OptionCard optionData={items} key={i}/> 
-                        )
+                        );
                     })
-                
-                }
+                }     
             </div>
         </div>
     );

@@ -17,6 +17,8 @@ model Brand {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   Item  Item[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Category {
@@ -24,13 +26,17 @@ model Category {
   title       String
   description String?
   Item        Item[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Unit {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
+  title         String
   abbreviation String
   Item         Item[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Warehouse {
@@ -39,14 +45,15 @@ model Warehouse {
   location               String?
   description            String?
   warehouseType          String
-  AddStockWarehouse      AddStockWarehouse[]
-  TransferStockWarehouse TransferStockWarehouse[]
+  Item                   Item[]
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
 
 model Item {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   title        String
-  category     Category @relation(fields: [categoryId], references: [id])
+  category     Category @relation(fields: [categoryId], references: [id],onDelete : Cascade)
   categoryId   String   @db.ObjectId
   sku          String   @unique
   barcode      String?
@@ -55,34 +62,63 @@ model Item {
   unitId       String   @db.ObjectId
   brand        Brand    @relation(fields: [brandId], references: [id])
   brandId      String   @db.ObjectId
-  supplierId   String
+  supplier     Supplier @relation(fields: [supplierId], references: [id])
+  supplierId   String   @db.ObjectId
   buyingPrice  Float
   sellingPrice Float
   reOrderPoint Int
-  warehouseId  String
+  warehouse    Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId  String    @db.ObjectId
   imageUrl     String
   weight       Float?
   dimensions   String?
   taxRate      Float
   description  String?
   notes        String?
+  AddStockWarehouse      AddStockWarehouse[]
+  TransferStockWarehouse TransferStockWarehouse[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model AddStockWarehouse {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   referenceNumber String
+  item            Item @relation(fields: [itemId], references: [id])
+  itemId          String
   addStockQty     Int
   notes           String?
-  warehouse       Warehouse @relation(fields: [warehouseId], references: [id])
-  warehouseId     String    @db.ObjectId
+  recievingWarehouseId String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model TransferStockWarehouse {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   referenceNumber   String
   transferStockQty  Int
+  item              Item @relation(fields: [itemId], references: [id])
+  itemId            String  
   notes             String?
-  warehouse         Warehouse @relation(fields: [warehouseId], references: [id])
-  warehouseId       String    @db.ObjectId
   givingWarehouseId String
+  recievingWarehouseId String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt 
+}
+
+model Supplier {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  phone        String?
+  email        String?
+  address      String?
+  contactPerson String?
+  supplierCode String   @unique
+  paymentTerms String?
+  taxId        String?
+  notes        String?
+  Item         Item[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
 }

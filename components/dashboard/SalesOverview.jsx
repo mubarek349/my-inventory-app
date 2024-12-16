@@ -5,7 +5,7 @@ export default function SalesOverview(){
     const inventorySummary=[
         {
             title: "Quantity in Hand",
-            number: 10 
+            number: 15 
         },
         {
             title: "Quantity to be received",
@@ -23,21 +23,21 @@ export default function SalesOverview(){
         },
         {
             title : "To be Shipped",
-            number : 0,
+            number : 2,
             unit : "Pkgs",
             href : "#",
             color :"text-red-600"
          },
          {
             title : "To be Delivered",
-            number : 0,
+            number : 5,
             unit : "Pkgs",
             href : "#",
             color :"text-green-600"
          },
          {
             title : "To be Invoiced",
-            number : 10,
+            number : 8,
             unit : "Qty",
             href : "#",
             color :"text-orange-600"

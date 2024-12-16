@@ -15,35 +15,30 @@ export function handler(req, res) {
 export async function POST(request) {
     
     try {
-        const data=await request.json();
-        // if (!ObjectId.isValid(data.categoryId)) {
-        //     return new NextResponse(
-        //     JSON.stringify({ error: "Invalid categoryId provided." }),
-        //     { status: 400 }
-        //     );
-        // }
-        // const item=await db.item.create({data:{
-        //     title: data.title,
-        //     categoryId : data.categoryId,
-        //     sku,
-        //     barcode,
-        //     quantity : parseInt(data.quantity),
-        //     unitId,
-        //     brandId,
-        //     supplierId,
-        //     buyingPrice : parseFloat(data.buyingPrice),
-        //     sellingPrice : parseFloat(data.sellingPrice),
-        //     reOrderPoint : parseInt(data.reOrderPoint),
-        //     warehouseId,
-        //     imageUrl,
-        //     weight : parseFloat(data.weight),
-        //     dimensions,
-        //     taxRate : parseFloat(data.taxRate),
-        //     description,
-        //     notes},},);
-            
-        console.log(data);
-        return NextResponse.json(data);
+        const itemData=await request.json();
+        
+        const item=await db.item.create({data:{
+            title: itemData.title,
+            categoryId : itemData.categoryId,
+            sku : itemData.sku,
+            barcode : itemData.barcode,
+            quantity : parseInt(itemData.quantity),
+            unitId : itemData.unitId,
+            brandId : itemData.brandId,
+            supplierId : itemData.supplierId,
+            buyingPrice : parseFloat(itemData.buyingPrice),
+            sellingPrice : parseFloat(itemData.sellingPrice),
+            reOrderPoint : parseInt(itemData.reOrderPoint),
+            warehouseId : itemData.warehouseId,
+            imageUrl : itemData.imageUrl,
+            weight : parseFloat(itemData.weight),
+            dimensions : itemData.dimensions,
+            taxRate : parseFloat(itemData.taxRate),
+            description : itemData.description,
+            notes : itemData.notes
+        },},);
+        console.log(item);
+        return NextResponse.json(item);
     } catch (error) {
         console.log(error);
         return NextResponse.json(
@@ -54,7 +49,29 @@ export async function POST(request) {
             {
                 status:500
             });
-    }finally{
+    }
+    finally{
            await db.$disconnect(); 
+    }
+}
+
+export async function GET(){
+    try {
+        const items = await db.item.findMany({
+            orderBy:{
+                createdAt : 'desc' // latest item
+            },
+        });
+        return NextResponse.json(items);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to fetch an item"
+            },
+            {
+                status:500
+            });
     }
 }
