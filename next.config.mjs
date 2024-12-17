@@ -13,5 +13,10 @@ const nextConfig = {
         ],
    },
    
+   
 };
+module.exports = {
+    output: 'standalone', // Removes the requirement for static HTML export
+  };
+  
 export default nextConfig;

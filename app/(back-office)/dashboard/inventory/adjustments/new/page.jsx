@@ -9,7 +9,6 @@ export default async function NewAdjustments(){
       warehousesData]
     )
 
-    return(
-        <AdjustmentForm items={items} warehouses={warehouses}/>
-    );
+    return <AdjustmentForm items={items} warehouses={warehouses} />;
+
 }
