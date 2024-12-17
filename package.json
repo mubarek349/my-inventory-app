@@ -23,7 +23,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
     "react-hot-toast": "^2.4.1",
-    "sass": "^1.80.3",
+    "sass": "^1.83.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.4.0"
