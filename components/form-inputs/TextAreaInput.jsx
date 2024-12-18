@@ -1,4 +1,3 @@
-import { Plus } from "lucide-react";
 import React from "react";
 export default function TextAreaInput({label,name,isRequired=true,register,errors,className="sm:col-span-2"}) {
    return(

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
@@ -17,7 +17,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
-    "lucide-react": "^0.453.0",
+    "lucide-react": "^0.468.0",
     "next": "15.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

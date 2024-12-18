@@ -3,7 +3,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 export default async function Suppliers(){
    const suppliers = await getData("suppliers"); 
-   const columns=["name","phone","email"];
+   const columns=["title","phone","email"];
    
     return(
         <div>

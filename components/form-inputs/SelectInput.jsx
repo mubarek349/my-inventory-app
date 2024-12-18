@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 export default function SelectInput({label,name,register,className="sm:col-span-2",options=[]}){
     return(
@@ -18,7 +19,7 @@ export default function SelectInput({label,name,register,className="sm:col-span-
                     {options.map((option,i)=>{
                         return(
                             <option key={i} value={option.id} >
-                                {option.title}{option.name}
+                                {option.title}
                             </option>
                     )})} 
                 </select>  

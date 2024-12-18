@@ -84,7 +84,7 @@ export default function SideBar() {
 
   return (
            <div className="w-60 bg-slate-800
-            text-slate-50 sidebar h-screen overflow-y-auto fixed ">
+            text-slate-50 sidebar h-screen overflow-y-auto fixed z-50">
                 {/*top part */}
                <div className="flex flex-col">
                     {/*(logo part) */}

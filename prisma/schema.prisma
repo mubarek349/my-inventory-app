@@ -108,7 +108,7 @@ model TransferStockWarehouse {
 
 model Supplier {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
+  title        String
   phone        String?
   email        String?
   address      String?

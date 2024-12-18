@@ -1,7 +1,8 @@
+"use client"
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-export default function DataTable({data,columns}){
+export default function DataTable({data=[],columns=[]}){
     return(
         <div>
            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
