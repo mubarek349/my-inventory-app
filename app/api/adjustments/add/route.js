@@ -22,7 +22,7 @@ export async function POST(request) {
         console.log(adjustment);
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -44,11 +44,34 @@ export async function GET(){
         });
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch an Adjustment"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deleteaddStockWarehouse= await db.addStockWarehouse.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deleteaddStockWarehouse);
+        return NextResponse.json(deleteaddStockWarehouse);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete addStockWarehouse"
             },
             {
                 status:500

@@ -6,7 +6,7 @@ export async function POST(request) {
         console.log(adjustment);
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,

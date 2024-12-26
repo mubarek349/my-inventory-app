@@ -7,7 +7,7 @@ export async function POST(request) {
         console.log(unit);
         return NextResponse.json(unit);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -29,11 +29,33 @@ export async function GET(){
         });
         return NextResponse.json(units);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch a Unit"
+            },
+            {
+                status:500
+            });
+    }
+}
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deleteUnit= await db.unit.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deleteUnit);
+        return NextResponse.json(deleteUnit);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete Unit"
             },
             {
                 status:500

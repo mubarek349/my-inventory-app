@@ -7,7 +7,7 @@ export async function POST(request) {
         console.log(supplier);
         return NextResponse.json(supplier);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -29,11 +29,34 @@ export async function GET(){
         });
         return NextResponse.json(suppliers);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch a supplier"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deletesupplier= await db.supplier.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deletesupplier);
+        return NextResponse.json(deletesupplier);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete supplier"
             },
             {
                 status:500

@@ -4,11 +4,15 @@ import SelectInput from "@/components/form-inputs/SelectInput";
 import SubmitButton from "@/components/form-inputs/SubmitButton";
 import TextAreaInput from "@/components/form-inputs/TextAreaInput";
 import TextInput from "@/components/form-inputs/TextInput";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
+import { useRouter } from "next/navigation";
 import {useState } from "react";
 import { useForm } from "react-hook-form";
-export default function CreateItemForm({categories,brands,units,suppliers,warehouses}){
-
+export default function CreateItemForm({categories,brands,units,suppliers,warehouses,isUpdate=false,initialData={}}){
+    const router=useRouter();
+    function redirect(){
+        router.replace("/dashboard/inventory/items");
+    }
     const [imageUrl,setImageUrl] = useState("");
     
     const { 
@@ -16,13 +20,19 @@ export default function CreateItemForm({categories,brands,units,suppliers,wareho
         handleSubmit, 
         reset,
         formState: { errors } 
-        } = useForm();
+        } = useForm({
+            defaultValues:initialData
+        });
     const [loading,setLoading]=useState(false);
     //onsubmit function
     async function onSubmit(data){
         data.imageUrl=imageUrl;
-        console.log(data)
-        makePostRequest(setLoading,"api/items",data,"Item",reset);
+        console.log(data);
+        if (isUpdate){
+          await makePutRequest(setLoading,`api/items/${initialData.id}`,data,"Item",redirect,reset);
+        }else{
+          await makePostRequest(setLoading,"api/items",data,"Item",reset);
+        }
         setImageUrl("");
     }
     return(
@@ -155,7 +165,7 @@ export default function CreateItemForm({categories,brands,units,suppliers,wareho
                        /> 
                        <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"/>
                        </div>
-                   <SubmitButton isloading={loading} title="Item"/>
+                   <SubmitButton isLoading={loading} title={isUpdate?"Updated Item":"New Item"}/>
                 </form>
     );
 }

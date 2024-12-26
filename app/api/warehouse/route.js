@@ -8,7 +8,7 @@ export async function POST(request) {
         console.log(warehouse);
         return NextResponse.json(warehouse);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -32,11 +32,34 @@ export async function GET() {
         });
         return NextResponse.json(warehouses);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch a Warehouse"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deletewarehouse= await db.warehouse.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deletewarehouse);
+        return NextResponse.json(deletewarehouse);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete warehouse"
             },
             {
                 status:500

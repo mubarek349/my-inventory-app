@@ -68,7 +68,7 @@ export default function TransferInventoryForm({items,warehouses}){
                         errors={errors}
                    />                     
                 </div>
-               <SubmitButton isloading={loading} title="Adjustment" />
+               <SubmitButton isLoading={loading} title="Adjustment" />
             </form>
     
         </div>

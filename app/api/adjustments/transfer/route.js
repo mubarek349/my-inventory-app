@@ -1,5 +1,4 @@
 import db from "@/lib/db";
-import { data } from "autoprefixer";
 import { NextResponse } from "next/server";
 export async function POST(request) {
     try {
@@ -24,7 +23,7 @@ export async function POST(request) {
         console.log(adjustment);
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -45,11 +44,34 @@ export async function GET(){
         });
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch an Adjustment"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deletetransferStockWarehouse= await db.transferStockWarehouse.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deletetransferStockWarehouse);
+        return NextResponse.json(deletetransferStockWarehouse);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete transferStockWarehouse"
             },
             {
                 status:500

@@ -1,9 +1,9 @@
 import { Circle, Plus } from "lucide-react";
 import React from "react";
-export default function SubmitButton({isloading,title}) {
+export default function SubmitButton({isLoading,title}) {
   return (
     <div className="mt-6 sm:col-span-1">
-    {isloading?
+    {isLoading?
         (
             <button disabled type="button" className="text-white bg-blue-700 
                 hover:bg-blue-800 focus:ring-4 focus:outline-none 

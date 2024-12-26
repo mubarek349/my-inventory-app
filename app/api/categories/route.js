@@ -7,7 +7,7 @@ export async function POST(request) {
         console.log(category);
         return NextResponse.json(category);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -31,11 +31,34 @@ export async function GET() {
         });
         return NextResponse.json(categories);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch a category"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deletecategory= await db.category.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deletecategory);
+        return NextResponse.json(deletecategory);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete category"
             },
             {
                 status:500

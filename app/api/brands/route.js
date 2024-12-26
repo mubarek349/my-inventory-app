@@ -7,7 +7,7 @@ export async function POST(request) {
         console.log(brand);
         return NextResponse.json(brand);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -17,7 +17,6 @@ export async function POST(request) {
                 status:500
             });
     }
-    
 }
 
 export async function GET(){
@@ -29,11 +28,34 @@ export async function GET(){
         });
         return NextResponse.json(brands);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch a Brand"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deletebrand= await db.brand.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deletebrand);
+        return NextResponse.json(deletebrand);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete brand"
             },
             {
                 status:500

@@ -17,7 +17,7 @@ export default function AddInventoryForm({items,warehouses}){
 
     async function onSubmit(data){
         console.log(data)
-        makePostRequest(setLoading,"api/adjustments/add",data,"Stock Adjustment",reset);
+        await makePostRequest(setLoading,"api/adjustments/add",data,"Stock Adjustment",reset);
     }
     return(
         <div>
@@ -41,7 +41,8 @@ export default function AddInventoryForm({items,warehouses}){
                         className="w-full"
                         options={items}
                    />
-                   <TextInput label="Enter Quantity of stock to Add"
+                   <TextInput 
+                        label="Enter Quantity of stock to Add"
                         name="addStockQty"
                         type="number"
                         register={register}
@@ -64,7 +65,7 @@ export default function AddInventoryForm({items,warehouses}){
                         errors={errors}
                    />                     
                 </div>
-               <SubmitButton isloading={loading} title="Adjustment"/>
+               <SubmitButton isLoading={loading} title="Adjustment"/>
             </form>
     
         </div>

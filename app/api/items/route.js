@@ -40,7 +40,7 @@ export async function POST(request) {
         console.log(item);
         return NextResponse.json(item);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
@@ -64,11 +64,34 @@ export async function GET(){
         });
         return NextResponse.json(items);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(
             {
                 error,
                 message:"Failed to fetch an item"
+            },
+            {
+                status:500
+            });
+    }
+}
+
+export async function DELETE(request){
+    try {
+        const id=request.nextUrl.searchParams.get("id");
+        const deleteitem= await db.item.delete({
+            where:{
+                id  
+            },
+        });
+        console.log(deleteitem);
+        return NextResponse.json(deleteitem);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                error,
+                message:"Failed to Delete item"
             },
             {
                 status:500
