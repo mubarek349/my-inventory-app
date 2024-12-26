@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Swal from "sweetalert2";
 export default function DeleteBtn({id,endpoint}) {
-    const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl=process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const router=useRouter();
    async function handleDelete(){
     Swal.fire({
