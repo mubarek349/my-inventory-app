@@ -1,6 +1,6 @@
 import React from "react";
 import { getData } from "@/lib/getData";
-import Newitems from "../../new/page";
+import NewItem from "@/components/dashboard/NewItem";
 
 export default async function Update({  params }) {
   // Ensure params is destructured properly
@@ -14,6 +14,5 @@ export default async function Update({  params }) {
       </div>
     );
   }
-
-  return <Newitems isUpdate={true} initialData={data}/>;
+  return <NewItem initialData={data} isUpdate={true}/>;
 }

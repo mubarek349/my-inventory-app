@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import DataTable from "@/components/dashboard/DataTable";
 import FixedHeader from "@/components/dashboard/FixedHeader";
@@ -23,7 +22,7 @@ export default function Items() {
         fetchItems();
     }, []);
 
-    const columns = ["title", "sellingPrice"];
+    const columns = ["imageUrl","title", "sellingPrice"];
 
     return (
         <div>

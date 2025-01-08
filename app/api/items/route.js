@@ -75,26 +75,42 @@ export async function GET(){
             });
     }
 }
-
-export async function DELETE(request){
+export async function DELETE(request) {
     try {
-        const id=request.nextUrl.searchParams.get("id");
-        const deleteitem= await db.item.delete({
-            where:{
-                id  
+        // Extract 'id' from query parameters
+        const id = request.nextUrl.searchParams.get("id");
+
+        // Validate 'id'
+        if (!id) {
+            throw new TypeError("The 'id' parameter is required but was not provided.");
+        }
+
+        // Perform delete operation
+        const deleteitem = await db.item.delete({
+            where: {
+                id, // Ensure 'id' matches the expected schema type in your database
             },
         });
-        console.log(deleteitem);
-        return NextResponse.json(deleteitem);
+
+        console.log("Deleted item:", deleteitem);
+
+        // Return success response
+        return NextResponse.json({
+            success: true,
+            message: "Item deleted successfully.",
+            data: deleteitem,
+        });
+    
     } catch (error) {
-        console.error(error);
+        console.error("Error in DELETE handler:", error);
+
+        // Return error response
         return NextResponse.json(
             {
-                error,
-                message:"Failed to Delete item"
+                success: false,
+                message: error.message || "Failed to delete item.",
             },
-            {
-                status:500
-            });
+            { status: 500 }
+        );
     }
 }
