@@ -23,7 +23,7 @@ export default function Brands() {
         fetchBrands();
     }, []);
 
-    const columns = ["title"];
+    const columns = ["title","createdAt","updatedAt"];
 
     return (
         <div>

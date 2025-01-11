@@ -21,9 +21,8 @@ export async function GET(request,{params}){
             });
     }
 }
-export async function PUT(request,{params}){
+export async function PUT(request,{params :{id}}){
     try {
-        const { id } = await params;
         const {title}=await request.json();
         const brand = await db.brand.update({
             where:{

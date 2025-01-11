@@ -1,10 +1,11 @@
-import { BaggageClaim, BarChart4, ChevronLeft,ChevronRight,CloudCog,FolderClosed,Home, ShoppingBag, ShoppingCart } from "lucide-react";
+import { BaggageClaim, BarChart4, ChevronLeft,ChevronRight,CloudCog,FolderClosed,Home, ShoppingBag, ShoppingCart, X } from "lucide-react";
 import React from "react";
 import Link from "next/link";
 import SubscriptionCard from "@/components/dashboard/SubscriptionCard";
 import SideBarDropDowmLink from "./SideBarDropDownLink";
 
-export default function SideBar() {
+export default function SideBar({showSideBar,setShowSideBar}) {
+    console.log(showSideBar);
     const inventoryLinks=[
         {
           title : "All",
@@ -83,26 +84,31 @@ export default function SideBar() {
     ];
 
   return (
-           <div className="w-60 bg-slate-800
-            text-slate-50 sidebar h-screen overflow-y-auto fixed z-50">
-                {/*top part */}
+           <div className={`${showSideBar ? "w-60 min-h-screen bg-slate-800 text-slate-50 fixed  lg:block z-50"
+                                          : "w-60 min-h-screen bg-slate-800 text-slate-50 fixed hidden lg:block z-50"}`}>
+                {/*top part sidebar  overflow-y-auto fixed z-50 */}
                <div className="flex flex-col">
                     {/*(logo part) */}
-                   <Link href="/dashboard/home/overview" className="flex bg-slate-950 space-x-2
-                   items-center py-4 px-2 fixed top-0 left-0 right-900 z-10 w-60">
-                       <BaggageClaim /> 
-                       <span className="font-semibold">Inventory</span>
-                   </Link>
+                    <div className="flex justify-between">
+                        <Link href="/dashboard/home/overview" className="flex bg-slate-950 space-x-2
+                        items-center py-3 px-2 w-full">
+                            <BaggageClaim /> 
+                            <span className="font-semibold">Inventory</span>
+                        </Link>
+                        <button className="bg-slate-950 px-4 py-3 lg:hidden" onClick={()=>setShowSideBar(false)}>
+                            <X className="w-6 h-6 text-white"/>
+                        </button>
+                   </div>
                     {/*links */}
                      <nav className="flex flex-col 
-                     gap-4 p-3 mt-14">
+                     gap-4 p-3 mt-4">
                         <Link className="flex items-center 
                         space-x-2 bg-blue-600 text-slate-50
                         p-2 rounded-md" href="/dashboard/home">
                             <Home  className="w-4 h-4"/>
                             <span>Home</span>
                         </Link>
-                        <SideBarDropDowmLink links={inventoryLinks} title="inventory" Icon={BaggageClaim} />
+                        <SideBarDropDowmLink links={inventoryLinks} title="inventory" Icon={BaggageClaim} setShowSideBar={setShowSideBar} />
                         <SideBarDropDowmLink links={salesLinks} title="Sales" Icon={ShoppingCart} />
                         <button className="flex items-center justify-between w-full" >
                             <div className="p-2 flex items-center 

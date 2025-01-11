@@ -21,9 +21,8 @@ export async function GET(request,{params}){
             });
     }
 }
-export async function PUT(request,{params}){
+export async function PUT(request,{params :{id}}){
     try {
-        const { id } = await params;
         const itemData=await request.json();
         const item = await db.item.update({
             where:{

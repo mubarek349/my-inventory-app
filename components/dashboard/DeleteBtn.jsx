@@ -10,7 +10,6 @@ export default function DeleteBtn({ id, endpoint  }) {
   const router = useRouter();
   const [loading,setLoading]=useState(false);
   async function handleDelete() {
-    setLoading(true);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -21,7 +20,7 @@ export default function DeleteBtn({ id, endpoint  }) {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-
+        setLoading(true);
         try {
           const res = await fetch(`${baseUrl}/api/${endpoint}?id=${id}`, {
             method: "DELETE",
@@ -33,8 +32,8 @@ export default function DeleteBtn({ id, endpoint  }) {
           }
 
           console.log(res);
-          setLoading(false);
           toast.success("Deleted Successfully");
+          setLoading(false);
 
           // Ensure refresh works after the operation
           router.refresh();

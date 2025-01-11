@@ -66,7 +66,7 @@ export default function Inventory(){
     ];
     return(
         <div>
-            <FixedHeader title="All Items" newLink="/dashboard/inventory/items/new"/>
+            <FixedHeader title="" newLink="/dashboard/inventory/items/new"/>
             <div className="grid grid-col-1 lg:grid-cols-3 md:grid-cols-2  py-8 px-16 gap-6">
                 {
                     optionCards.map((items,i)=>{
