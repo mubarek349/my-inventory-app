@@ -28,8 +28,21 @@ export default function DataTable({ data = [], columns = [],resourceTitle="" }) 
                   className="bg-white border-b dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 dark:border-gray-700"
                 >
                   {columns.map((columnName, i) => (
-                    <td key={i} className="px-6 py-4">
-                      {item[columnName] || "-"}
+                    <td key={i} className="px-6 py-4"> 
+                      {columnName==="imageUrl" ? (
+                        <img 
+                          src={item[columnName]}
+                          alt={`Image for ${resourceTitle}`}
+                          className="w-10 h-10 object-cover rounded-full "
+                        />
+                      ) 
+                      : columnName === "createdAt" ||
+                          columnName === "updatedAt" ? (
+                            new Date(item[columnName]).toLocaleDateString()
+                          )
+                      : (
+                        item[columnName] || "-"
+                        )}
                     </td>
                   ))}
                   <td className="px-6 py-4 flex items-center space-x-4">
