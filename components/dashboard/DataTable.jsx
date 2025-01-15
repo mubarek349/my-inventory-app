@@ -8,7 +8,7 @@ export default function DataTable({ data = [], columns = [],resourceTitle="" }) 
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         {data.length > 0 ? (
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 {columns.map((columnName, i) => (
@@ -35,14 +35,15 @@ export default function DataTable({ data = [], columns = [],resourceTitle="" }) 
                           alt={`Image for ${resourceTitle}`}
                           className="w-10 h-10 object-cover rounded-full "
                         />
-                      ) 
-                      : columnName === "createdAt" ||
+                      ) : columnName === "createdAt" ||
                           columnName === "updatedAt" ? (
                             new Date(item[columnName]).toLocaleDateString()
                           )
-                      : (
-                        item[columnName] || "-"
-                        )}
+                      :
+                       columnName.includes(".") ?( 
+                        columnName.split(".").reduce((obj,key) => obj[key],item)
+                      )
+                      :(item[columnName] || "-")}
                     </td>
                   ))}
                   <td className="px-6 py-4 flex items-center space-x-4">

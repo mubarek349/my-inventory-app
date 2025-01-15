@@ -13,7 +13,7 @@ export default function CreateItemForm({categories,brands,units,suppliers,wareho
     function redirect(){
         router.replace("/dashboard/inventory/items");
     }
-    const [imageUrl,setImageUrl] = useState("");
+    const [imageUrl,setImageUrl] = useState(initialData.imageUrl);
     
     const { 
         register, 

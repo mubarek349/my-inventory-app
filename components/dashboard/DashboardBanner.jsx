@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export default function DashboardBanner(){
     const [hidden,setHidden]=useState(false);
     return(
-        <div className={`${hidden?"hidden":"relative  py-6 px-16 items-center grid grid-cols-12 bg-white gap-4"}`}>
+        <div className={`${hidden?"hidden":"hidden lg:grid grid-cols-12 py-6 px-16 items-center bg-white gap-4 relative"}`}>
             
             {/* icon */}
 
@@ -18,7 +18,7 @@ export default function DashboardBanner(){
             <h2 className="mb-2 font-bold text-2xl opacity-75">Start accepting online payments</h2>
             <p>Businesses are moving towards online payments 
                 as they're easy,secure and fast.Try them 
-                for your business today</p>
+                for your business today</p> 
           </div>
 
             {/* button */}

@@ -22,7 +22,7 @@ export default function Items() {
         fetchItems();
     }, []);
 
-    const columns = ["imageUrl","title", "sellingPrice"];
+    const columns = ["imageUrl","title", "sellingPrice","category.title"];
 
     return (
         <div>

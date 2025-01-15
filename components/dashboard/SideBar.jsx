@@ -104,7 +104,9 @@ export default function SideBar({showSideBar,setShowSideBar}) {
                      gap-4 p-3 mt-4">
                         <Link className="flex items-center 
                         space-x-2 bg-blue-600 text-slate-50
-                        p-2 rounded-md" href="/dashboard/home">
+                        p-2 rounded-md" href="/dashboard/home/overview"
+                        onClick={()=>setShowSideBar(false)}
+                        >
                             <Home  className="w-4 h-4"/>
                             <span>Home</span>
                         </Link>

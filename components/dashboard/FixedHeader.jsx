@@ -29,7 +29,7 @@ export default function FixedHeader({newLink,title}){
                     </button>
                 {/* Help */}
                     <button className="bg-orange-400 p-2 rounded-md text-white ">
-                        <HelpCircle className="w-4 h-6"/>
+                        <HelpCircle className="w-4 h-4"/>
                     </button>
                 </div>
 

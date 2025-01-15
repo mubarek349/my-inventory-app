@@ -4,10 +4,8 @@ import React from "react";
 export default function OverView(){
     return(
         <div>
-            <h2>
               <DashboardBanner/>
                <SalesOverview />
-            </h2>
         </div>
     );
 }

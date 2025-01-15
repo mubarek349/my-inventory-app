@@ -44,12 +44,12 @@ export default function SalesOverview(){
         }
    ];
     return(
-        <div className=" bg-blue-100 p-8 border-b border-slate-300 grid grid-cols-12">
+        <div className=" bg-blue-50 gap-4 border-b border-slate-300 grid grid-cols-12">
             {/*Sales Activity*/}
-            <div className="col-span-8 border-slate-300 border-r p-8">
+            <div className="col-span-full lg:col-span-8 border-slate-300 border-r p-8 py-16 lg:py-8 ">
                <h2 className="mb-6 text-xl">Sales Activity</h2>
                {/*Cards*/}
-               <div className="pr-8 grid grid-cols-4 gap-4">
+               <div className="pr-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {
                     salesActivity.map((item,i)=>{
                         return(
@@ -62,7 +62,7 @@ export default function SalesOverview(){
             </div>
             {/*Inventory Summary*/}
 
-            <div className="col-span-4 p-8">
+            <div className="col-span-full lg:col-span-4 p-8">
                 <h2 className="mb-6 text-xl">Inventory Summary</h2>
                 <div className="">
                    {
