@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
-export default function DeleteBtn({ id, endpoint  }) {
+export default function DeleteBtn({ id, endpoint ,setRefresh }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const router = useRouter();
   const [loading,setLoading]=useState(false);
@@ -30,13 +30,11 @@ export default function DeleteBtn({ id, endpoint  }) {
             setLoading(false);
             throw new Error(`Failed to delete: ${res.statusText}`);
           }
-
+          // Ensure refresh works after the operation
+          setRefresh(new Date().toISOString());
           console.log(res);
           toast.success("Deleted Successfully");
           setLoading(false);
-
-          // Ensure refresh works after the operation
-          router.refresh();
         } catch (error) {
           console.error("Error deleting resource:", error);
           Swal.fire({

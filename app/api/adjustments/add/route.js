@@ -6,23 +6,66 @@ export async function POST(request) {
             referenceNumber,
             itemId,
             addStockQty,
-            warehouseId,
-            notes
+            recievingWarehouseId,
+            notes,
+            supplierId,
           } = await request.json();
-        const adjustment=await db.addStockWarehouse.
-        create({data:
-                {
-                    referenceNumber : referenceNumber,
-                    itemId : itemId,
-                    addStockQty : parseInt(addStockQty),
-                    recievingWarehouseId : warehouseId,
-                    notes : notes
-                }
+        
+            //get the item data
+            const itemToUpdate = await db.item.findUnique({
+                where :{
+                    id : itemId // latest adjustment
+                },
             });
-        console.log(adjustment);
+            //update the quantity
+            const currentItemQuantity=itemToUpdate.quantity;
+            const newQty=parseInt(currentItemQuantity) + parseInt(addStockQty);
+            
+
+            //affect the Item
+        const updatedItem=await db.item.update({ where:{
+                id : itemId, // selected brand
+            },
+            data:{
+                quantity : newQty,
+            }
+            });
+
+            //get the warehouse data
+            const warehouse = await db.warehouse.findUnique({
+                where :{
+                    id : recievingWarehouseId, // latest adjustment
+                },
+            });
+            //update the quantity
+            const currentWarehouseStock=warehouse.stockQty;
+            const newStockQty=parseInt(currentWarehouseStock) + parseInt(addStockQty);
+
+
+            //affect the Item
+            const updatedWarehouse=await db.warehouse.update(
+                { where:{
+                id : recievingWarehouseId, // selected brand
+            },
+            data:{
+                stockQty : newStockQty,
+            }
+            });
+
+            const adjustment=await db.addStockWarehouse.create(
+                { data:
+                    {
+                        referenceNumber,
+                        itemId ,
+                        addStockQty : parseInt(addStockQty),
+                        recievingWarehouseId ,
+                        notes ,
+                        supplierId,
+                    }
+                });
         return NextResponse.json(adjustment);
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return NextResponse.json(
             {
                 error,
@@ -31,10 +74,8 @@ export async function POST(request) {
             {
                 status:500
             });
-    }
-    
+    } 
 }
-
 export async function GET(){
     try {
         const adjustment = await db.AddStockWarehouse.findMany({
@@ -55,7 +96,6 @@ export async function GET(){
             });
     }
 }
-
 export async function DELETE(request){
     try {
         const id=request.nextUrl.searchParams.get("id");

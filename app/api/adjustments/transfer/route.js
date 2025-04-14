@@ -7,23 +7,71 @@ export async function POST(request) {
             transferStockQty,
             itemId,
             givingWarehouseId,
-            warehouseId,
+            recievingWarehouseId,
             notes,
           }
      = await request.json();
-        const adjustment=await db.transferStockWarehouse.
-        create({data:
-                {referenceNumber :referenceNumber,
-                transferStockQty : parseInt(transferStockQty),
-                itemId : itemId,
-                givingWarehouseId : givingWarehouseId,
-                recievingWarehouseId : warehouseId,
-                notes: notes}
-          });
-        console.log(adjustment);
-        return NextResponse.json(adjustment);
+
+        //getting the Giving warehouse
+        const givingWarehouse = await db.warehouse.findUnique({
+            where :{
+                id : givingWarehouseId, // latest adjustment
+            },
+        });
+        //update the Giving Warehouse
+        const currentWarehouseGivingStock=givingWarehouse.stockQty;
+        if(parseInt(currentWarehouseGivingStock)>parseInt(transferStockQty)){
+            const newStockForGivingWarehouse=parseInt(currentWarehouseGivingStock) - parseInt(transferStockQty);
+            //affect the 
+            const updatedGivingWarehouse=await db.warehouse.update(
+                { where:{
+                id : recievingWarehouseId, 
+            },
+            data:{
+                stockQty : newStockForGivingWarehouse,
+            }
+            });
+            //getting the receiving warehouse
+            const recievingWarehouse = await db.warehouse.findUnique({
+                where :{
+                    id : recievingWarehouseId, // latest adjustment
+                },
+            });
+            //update the Receiving Warehouse
+            const currentWarehouseReceivingStock=recievingWarehouse.stockQty;
+            const newStockForReceivingWarehouse=parseInt(currentWarehouseReceivingStock) + parseInt(transferStockQty);
+
+
+            //affect the 
+            const updatedReceivingWarehouse=await db.warehouse.update(
+                { where:{
+                id : recievingWarehouseId, 
+            },
+            data:{
+                stockQty : newStockForReceivingWarehouse,
+            }
+            });
+            const adjustment=await db.transferStockWarehouse.
+            create({data:
+                    {referenceNumber,
+                    transferStockQty : parseInt(transferStockQty),
+                    itemId ,
+                    givingWarehouseId ,
+                    recievingWarehouseId ,
+                    notes}
+            });
+            console.log(adjustment);
+            return NextResponse.json(adjustment);
+        }else{
+            return NextResponse.json({
+                data:null,
+                message:"Giving Warehouse has no Enough Stock"
+            },{
+                status:409,
+            });
+        }
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return NextResponse.json(
             {
                 error,

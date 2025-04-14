@@ -45,6 +45,7 @@ model Warehouse {
   location               String?
   description            String?
   warehouseType          String
+  stockQty               Int @default(0)
   Item                   Item[]
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
@@ -58,16 +59,16 @@ model Item {
   sku          String   @unique
   barcode      String?
   quantity     Int
-  unit         Unit     @relation(fields: [unitId], references: [id])
+  unit         Unit     @relation(fields: [unitId], references: [id],onDelete : Cascade)
   unitId       String   @db.ObjectId
-  brand        Brand    @relation(fields: [brandId], references: [id])
+  brand        Brand    @relation(fields: [brandId], references: [id],onDelete : Cascade)
   brandId      String   @db.ObjectId
-  supplier     Supplier @relation(fields: [supplierId], references: [id])
+  supplier     Supplier @relation(fields: [supplierId], references: [id],onDelete : Cascade)
   supplierId   String   @db.ObjectId
   buyingPrice  Float
   sellingPrice Float
   reOrderPoint Int
-  warehouse    Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouse    Warehouse @relation(fields: [warehouseId], references: [id],onDelete : Cascade)
   warehouseId  String    @db.ObjectId
   imageUrl     String
   weight       Float?
@@ -84,8 +85,10 @@ model Item {
 model AddStockWarehouse {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   referenceNumber String
-  item            Item @relation(fields: [itemId], references: [id])
+  item            Item @relation(fields: [itemId], references: [id],onDelete : Cascade)
   itemId          String
+  supplier        Supplier @relation(fields: [supplierId], references: [id],onDelete : Cascade)
+  supplierId      String
   addStockQty     Int
   notes           String?
   recievingWarehouseId String
@@ -97,7 +100,7 @@ model TransferStockWarehouse {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   referenceNumber   String
   transferStockQty  Int
-  item              Item @relation(fields: [itemId], references: [id])
+  item              Item @relation(fields: [itemId], references: [id],onDelete : Cascade)
   itemId            String  
   notes             String?
   givingWarehouseId String
@@ -118,6 +121,7 @@ model Supplier {
   taxId        String?
   notes        String?
   Item         Item[]
+  AddStockWarehouse      AddStockWarehouse[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

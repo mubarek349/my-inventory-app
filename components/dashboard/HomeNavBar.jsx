@@ -36,11 +36,11 @@ export default function HomeNavBar() {
             </div>
         </div>
         <nav className="mt-6 space-x-4 flex">
-        <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul class="flex flex-wrap -mb-px">
+        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+            <ul className="flex flex-wrap -mb-px">
                {navLinks.map((item,i)=>{
                   return(
-                     <li class="me-2" key={i} >
+                     <li className="me-2" key={i} >
                         <Link  
                            href={item.href}
                            className={`${ pathname===item.href ? "inline-block px-4 py-2 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"

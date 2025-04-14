@@ -17,6 +17,27 @@ export async function POST(request) {
     try {
         const itemData=await request.json();
         
+        //get the warehouse data
+        const warehouseToUpdate = await db.warehouse.findUnique({
+            where :{
+                id : itemData.warehouseId // latest adjustment
+            },
+        });
+        //update the quantity
+        const currentWarehouseStock=warehouseToUpdate.stockQty;
+        const newStockQty=parseInt(currentWarehouseStock) + parseInt(itemData.quantity);
+
+
+        //affect the Item
+        const updatedWarehouse=await db.warehouse.update(
+            { where:{
+                    id : itemData.warehouseId, // selected brand
+                },
+                data:{
+                    stockQty : newStockQty,
+                },
+            });
+
         const item=await db.item.create({data:{
             title: itemData.title,
             categoryId : itemData.categoryId,
@@ -63,6 +84,7 @@ export async function GET(){
             },
             include: {
                 category : true,
+                warehouse : true,
             }
         });
         return NextResponse.json(items);
@@ -98,6 +120,7 @@ export async function DELETE(request) {
         console.log("Deleted item:", deleteitem);
 
         // Return success response
+        
         return NextResponse.json({
             success: true,
             message: "Item deleted successfully.",

@@ -8,6 +8,7 @@ import { getData } from "@/lib/getData";
 export default function Units() {
     const [units, setUnits] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchUnits() {
@@ -21,7 +22,7 @@ export default function Units() {
         }
 
         fetchUnits();
-    }, []);
+    }, [refresh]);
 
     const columns = ["title", "abbreviation"];
 
@@ -36,7 +37,7 @@ export default function Units() {
                 </div>
             ) : (
                 <div className="my-4 p-8">
-                    <DataTable data={units} columns={columns} resourceTitle="units" />
+                    <DataTable setRefresh={setRefresh} data={units} columns={columns} resourceTitle="units" />
                 </div>
             )}
         </div>

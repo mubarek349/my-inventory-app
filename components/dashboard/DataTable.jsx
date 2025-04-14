@@ -3,7 +3,7 @@ import { Pencil } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import DeleteBtn from "./DeleteBtn";
-export default function DataTable({ data = [], columns = [],resourceTitle="" }) {
+export default function DataTable({ data = [],setRefresh, columns = [],resourceTitle="" }) {
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -54,7 +54,7 @@ export default function DataTable({ data = [], columns = [],resourceTitle="" }) 
                       <Pencil className="w-4 h-4" />
                       <span>Edit</span>
                     </Link>
-                    <DeleteBtn id={item.id} endpoint={resourceTitle}/>
+                    <DeleteBtn id={item.id} endpoint={resourceTitle} setRefresh={setRefresh} />
                   </td>
                 </tr>
               ))}

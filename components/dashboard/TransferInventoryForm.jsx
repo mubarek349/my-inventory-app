@@ -56,7 +56,7 @@ export default function TransferInventoryForm({items,warehouses}){
                         options={warehouses}
                    />
                    <SelectInput label="Select the Warehouse that will receive the stock"
-                        name="warehouseId"
+                        name="recievingWarehouseId"
                         register={register}
                         className="w-full"
                         options={warehouses}

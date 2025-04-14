@@ -8,6 +8,7 @@ import { getData } from "@/lib/getData";
 export default function Categories() {
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchCategories() {
@@ -21,7 +22,7 @@ export default function Categories() {
         }
 
         fetchCategories();
-    }, []);
+    }, [refresh]);
 
     const columns = ["title", "description"];
 
@@ -35,7 +36,7 @@ export default function Categories() {
                 {error ? (
                     <p className="text-red-500 text-center">{error}</p>
                 ) : (
-                    <DataTable data={categories} columns={columns} resourceTitle="categories" />
+                    <DataTable setRefresh={setRefresh} data={categories} columns={columns} resourceTitle="categories" />
                 )}
             </div>
         </div>

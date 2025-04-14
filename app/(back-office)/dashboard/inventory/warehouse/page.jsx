@@ -8,6 +8,7 @@ import { getData } from "@/lib/getData";
 export default function Warehouse() {
     const [warehouses, setWarehouses] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchWarehouses() {
@@ -21,9 +22,9 @@ export default function Warehouse() {
         }
 
         fetchWarehouses();
-    }, []);
+    }, [refresh]);
 
-   const columns=["title","location","warehouseType"];
+   const columns=["title","location","warehouseType","stockQty"];
     
 
     return (
@@ -37,7 +38,7 @@ export default function Warehouse() {
                 </div>
             ) : (
                 <div className="my-4 p-8">
-                    <DataTable data={warehouses} columns={columns} resourceTitle="warehouse" />
+                    <DataTable setRefresh={setRefresh} data={warehouses} columns={columns} resourceTitle="warehouse" />
                 </div>
             )}
         </div>

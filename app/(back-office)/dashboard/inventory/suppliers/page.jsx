@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function Suppliers() {
     const [suppliers, setSuppliers] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchSuppliers() {
@@ -20,7 +21,7 @@ export default function Suppliers() {
             }
         }
         fetchSuppliers();
-    }, []);
+    }, [refresh]);
 
     const columns = ["title", "phone", "email"];
        
@@ -35,7 +36,7 @@ export default function Suppliers() {
                     </div>
                 ):(
                     <div className="my-4 p-8">
-                        <DataTable data={suppliers} columns={columns} resourceTitle="suppliers" />
+                        <DataTable setRefresh={setRefresh} data={suppliers} columns={columns} resourceTitle="suppliers" />
                    </div>
                 )}  
             </div>

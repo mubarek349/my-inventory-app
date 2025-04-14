@@ -6,7 +6,7 @@ import TextInput from "@/components/form-inputs/TextInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-export default function AddInventoryForm({items,warehouses}){
+export default function AddInventoryForm({items,warehouses,suppliers}){
     const { 
         register, 
         handleSubmit, 
@@ -33,13 +33,18 @@ export default function AddInventoryForm({items,warehouses}){
                         type="number"
                         register={register}
                         errors={errors}
-                        className="w-full"
                    />
                    <SelectInput label="Select the Item"
                         name="itemId"
                         register={register}
                         className="w-full"
                         options={items}
+                   />
+                   <SelectInput label="Select the Supplier"
+                        name="supplierId"
+                        register={register}
+                        className="w-full"
+                        options={suppliers}
                    />
                    <TextInput 
                         label="Enter Quantity of stock to Add"
@@ -53,7 +58,7 @@ export default function AddInventoryForm({items,warehouses}){
                    />
                    
                    <SelectInput label="Select the Warehouse that will receive the stock"
-                        name="warehouseId"
+                        name="recievingWarehouseId"
                         register={register}
                         className="w-full"
                         options={warehouses}

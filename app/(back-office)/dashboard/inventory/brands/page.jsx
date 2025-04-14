@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import DataTable from "@/components/dashboard/DataTable";
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
+import { data } from "autoprefixer";
 
 export default function Brands() {
     const [brands, setBrands] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh,setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchBrands() {
@@ -21,7 +23,7 @@ export default function Brands() {
         }
 
         fetchBrands();
-    }, []);
+    }, [refresh]);
 
     const columns = ["title","createdAt","updatedAt"];
 
@@ -36,7 +38,7 @@ export default function Brands() {
                 </div>
             ) : (
                 <div className="my-4 p-8">
-                    <DataTable data={brands} columns={columns} resourceTitle="brands" />
+                    <DataTable setRefresh={setRefresh} data={brands} columns={columns} resourceTitle="brands" />
                 </div>
             )}
         </div>

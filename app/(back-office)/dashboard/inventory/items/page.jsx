@@ -7,6 +7,7 @@ import { getData } from "@/lib/getData";
 export default function Items() {
     const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchItems() {
@@ -20,9 +21,9 @@ export default function Items() {
         }
 
         fetchItems();
-    }, []);
+    }, [refresh])
 
-    const columns = ["imageUrl","title", "sellingPrice","category.title"];
+    const columns = ["imageUrl","title", "quantity","category.title","warehouse.title"];
 
     return (
         <div>
@@ -35,7 +36,7 @@ export default function Items() {
                 </div>
             ) : (
                 <div className="my-4 p-8">
-                    <DataTable data={items} columns={columns} resourceTitle="items" />
+                    <DataTable data={items} setRefresh={setRefresh} columns={columns} resourceTitle="items" />
                 </div>
             )}
         </div>

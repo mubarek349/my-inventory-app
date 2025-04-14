@@ -9,6 +9,7 @@ export default function Adjustments() {
     const [addAdjustments, setAddAdjustments] = useState([]);
     const [transferAdjustments, setTransferAdjustments] = useState([]);
     const [error, setError] = useState(null);
+    const [refresh, setRefresh] = useState(new Date().toISOString());
 
     useEffect(() => {
         async function fetchAdjustments() {
@@ -17,7 +18,6 @@ export default function Adjustments() {
                     getData("adjustments/add"),
                     getData("adjustments/transfer"),
                 ]);
-
                 setAddAdjustments(addData);
                 setTransferAdjustments(transferData);
             } catch (err) {
@@ -25,12 +25,11 @@ export default function Adjustments() {
                 setError("Failed to load adjustments. Please try again later.");
             }
         }
-
         fetchAdjustments();
-    }, []);
+    }, [refresh]);
 
-    const addColumns = ["referenceNumber", "addStockQty"];
-    const transferColumns = ["referenceNumber", "transferStockQty"];
+    const addColumns = ["referenceNumber", "addStockQty","createdAt"];
+    const transferColumns = ["referenceNumber", "transferStockQty","createdAt"];
 
     return (
         <div>
@@ -46,13 +45,13 @@ export default function Adjustments() {
                     {/* Stock Increment Adjustments Table */}
                     <div className="my-4 p-8">
                         <h2 className="py-4 text-xl font-semibold">Stock Increment Adjustments</h2>
-                        <DataTable data={addAdjustments} columns={addColumns} resourceTitle="adjustments/add" />
+                        <DataTable data={addAdjustments} columns={addColumns} setRefresh={setRefresh} resourceTitle="adjustments/add" />
                     </div>
 
                     {/* Stock Transfer Adjustments Table */}
                     <div className="my-4 p-8">
                         <h2 className="py-4 text-xl font-semibold">Stock Transfer Adjustments</h2>
-                        <DataTable data={transferAdjustments} columns={transferColumns} resourceTitle="adjustments/transfer" />
+                        <DataTable data={transferAdjustments} setRefresh={setRefresh} columns={transferColumns} resourceTitle="adjustments/transfer" />
                     </div>
                 </>
             )}
